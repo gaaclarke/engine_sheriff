@@ -21,11 +21,17 @@ class AutoRollWidget extends StatelessWidget {
   }
 
   String _formatDate(DateTime dateTime) {
+    if (dateTime == null) {
+      return '???';
+    }
     DateTime local = dateTime.toLocal();
     return '${_padLeft(local.hour)}:${_padLeft(local.minute)} ${local.month}/${local.day}/${local.year}';
   }
 
   int _calcHoursSinceLastSuccess(DateTime lastSuccess) {
+    if (lastSuccess == null) {
+      return -1;
+    }
     int delta = DateTime.now().millisecondsSinceEpoch -
         lastSuccess.millisecondsSinceEpoch;
     const int millisecondsPerHour = 3600000;

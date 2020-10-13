@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'skia_autoroll.dart';
@@ -42,12 +43,10 @@ Future<SkiaAutoRoll> fetchSkiaAutoRollModeStatus(String url,
 }
 
 Future<dynamic> _getStatusBody(String url, http.Client client) async {
-  try {
-    final http.Response response = await client.get(url);
-    final String body = response?.body;
-    return (body != null && body.isNotEmpty) ? jsonDecode(body) : null;
-  } catch (error) {
-    print('Error fetching autoroller status: $error');
-    return null;
+  final http.Response response = await client.get(url);
+  if (response.statusCode != 200) {
+    throw HttpException('http status:${response.statusCode}');
   }
+  final String body = response?.body;
+  return (body != null && body.isNotEmpty) ? jsonDecode(body) : null;
 }
