@@ -35,9 +35,9 @@ class SkiaAutoRoll {
 }
 
 class RefreshAutoRoll extends StatefulWidget {
-  const RefreshAutoRoll({@required this.url, @required this.child});
+  const RefreshAutoRoll({@required this.skiaName, @required this.child});
 
-  final String url;
+  final String skiaName;
   final Widget child;
 
   @override
@@ -70,7 +70,7 @@ class _RefreshAutoRollState extends State<RefreshAutoRoll>
 
   Future<void> _refresh(Timer timer) async {
     try {
-      final SkiaAutoRoll roll = await fetchSkiaAutoRollModeStatus(widget.url);
+      final SkiaAutoRoll roll = await fetchSkiaAutoRollModeStatus(widget.skiaName);
       if (roll != null) {
         ModelBinding.update<SkiaAutoRoll>(context, roll);
       }

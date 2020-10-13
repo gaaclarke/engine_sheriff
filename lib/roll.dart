@@ -47,10 +47,10 @@ class AutoRollWidget extends StatelessWidget {
     int hoursSinceLastSuccess =
         _calcHoursSinceLastSuccess(autoRoll.lastSuccess);
     if (autoRoll.mode == 'running') {
-      if (autoRoll.lastRollResult == 'succeeded') {
+      if (autoRoll.lastRollResult == 'SUCCESS') {
         icon = Icons.check;
         backgroundColor = Colors.green;
-      } else if (autoRoll.lastRollResult == 'failed') {
+      } else if (autoRoll.lastRollResult == 'FAILURE') {
         icon = Icons.error;
         if (hoursSinceLastSuccess < 24) {
           backgroundColor = Colors.orangeAccent;

@@ -120,20 +120,20 @@ class _LuciRefreshingState extends State<_LuciRefreshingWidget> {
 }
 
 class _RefreshingAutoRollWidget extends StatelessWidget {
-  final String statusUrl;
   final String infoUrl;
+  final String skiaName;
   final String name;
 
-  const _RefreshingAutoRollWidget(this.name, infoUrl)
-      : statusUrl = '$infoUrl/json/status',
-        infoUrl = infoUrl;
+  const _RefreshingAutoRollWidget(this.name, argSkiaName)
+      : infoUrl = 'https://autoroll.skia.org/r/$argSkiaName',
+        skiaName = argSkiaName;
 
   @override
   Widget build(BuildContext context) {
     return ModelBinding<SkiaAutoRoll>(
       initialModel: SkiaAutoRoll(),
       child: RefreshAutoRoll(
-        url: statusUrl,
+        skiaName: skiaName,
         child: AutoRollWidget(
           name: name,
           url: infoUrl,
@@ -156,12 +156,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             _LuciRefreshingWidget('Engine LUCI',
                 'https://ci.chromium.org/p/flutter/g/engine/console', 12),
-            const _RefreshingAutoRollWidget('Engine → Framework',
-                'https://autoroll.skia.org/r/flutter-engine-flutter-autoroll'),
-            const _RefreshingAutoRollWidget('Dart → Engine',
-                'https://autoroll.skia.org/r/dart-sdk-flutter-engine'),
-            const _RefreshingAutoRollWidget('Skia → Engine',
-                'https://autoroll.skia.org/r/skia-flutter-autoroll'),
+            const _RefreshingAutoRollWidget('Engine → Framework', 'flutter-engine-flutter-autoroll'),
+            const _RefreshingAutoRollWidget('Dart → Engine', 'dart-sdk-flutter-engine'),
+            const _RefreshingAutoRollWidget('Skia → Engine', 'skia-flutter-autoroll'),
           ],
         ),
       ),
